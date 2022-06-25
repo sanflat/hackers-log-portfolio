@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind/output.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/task-modal.js"></script>
+</head>
+<body class="bg-gray-900">
+    <div class="relative bg-gray-900 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-gray-900 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
+                <!-- start components/header.htmlのフラグメント -->
+                <div th:replace="components/header::header()"></div>
+                <!-- /end  -->
+                <main class="mx-auto max-w-7xl px-4 sm:px-6 g:px-8">
+                    <!-- view -->
+                    <div th:object="${taskForm}" class="text-white m-10">
+                        <div class="flex mt-4">
+                            <p th:text="*{taskName}" class="block flex-1 text-xl font-bold"></p>
+                            <a class="flex-initial group relative justify-center py-2 px-4 float-right border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                               onclick="taskEditModalOpen()">
+                                Edit
+                            </a>
+                        </div>
+                        <div class="border-y border-gray-600 mt-3 py-3">
+                            <p class="my-4 mx-8">
+                                <th:block th:if="*{contents}">
+                                    <th:block th:each="line: *{contents.split('\r\n|\r|\n', -1)}">
+                                        <th:block th:text="${line}" /><br />
+                                    </th:block>
+                                </th:block>
+                            </p>
+                        </div>
+                        <div class="flex mt-3">
+                            <div class="flex-1">
+                                <p th:text="'User：　' + *{userName}" class="ml-2"></p>
+                            </div>
+                            <div class="flex-1">
+                                <p th:text="'Status：　' + *{statusName}"></p>
+                            </div>
+                            <div class="flex-1">
+                                <p th:text="'Created at：　' + *{createdAt}"></p>
+                            </div>
+                            <div class="flex-1">
+                                <p th:text="'Updated at：　' + *{updatedAt}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <div th:replace="components/task_edit_modal::taskEditModal()"></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900">
+    <div th:replace="components/header::header()"></div>
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Sign Up</h2>
+            </div>
+            <form class="mt-8 space-y-6" th:action="@{/sign_up/create}" th:object="${userForm}" method="post">
+                <div class="rounded-md shadow-sm">
+                    <div class="my-2">
+                        <label th:for="name" class="text-white">Your Name</label>
+                        <input id="name" name="name" value="hey" type="text" autocomplete="name" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Your Name" readonly>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-700"></span>
+                    </div>
+                    <div class="my-2">
+                        <label th:for="mail" class="text-white">Email address</label>
+                        <input id="mail" name="mail" value="hey@test-mail.com" type="email" autocomplete="email" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" readonly>
+                        <span th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="text-red-700"></span>
+                    </div>
+                    <div class="my-2">
+                        <label th:for="password" class="text-white">Password</label>
+                        <input id="password" name="password" value="password" type="password" autocomplete="current-password" class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" readonly>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-700"></span>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Create your account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

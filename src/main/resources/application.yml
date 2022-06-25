@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: develop
+---
+spring:
+  profiles: develop
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db:3306/hackers_log_db
+    username: user
+    password: password
+  data:
+    web:
+      base-path: /
+  logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
+#---
+#spring:
+#  profiles: production
+#  datasource:
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://sample:3306/hackers-log-db
+#    username: sample
+#    password: sample
+#  data:
+#    web:
+#      base-path: /

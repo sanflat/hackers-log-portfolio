@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<div id="header" th:fragment="header()" class="relative pt-6 px-4 sm:px-6 lg:px-8">
+    <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
+        <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+            <div class="flex items-center justify-between w-full md:w-auto">
+                <a th:href="@{/}" class="text-white">
+                    Hackers Log
+                </a>
+            </div>
+        </div>
+        <div class="block ml-10 pr-4 space-x-8">
+            <a th:if="${isSignUp != null}" th:href="@{/sign_up}" class="pr-4 font-medium text-gray-500 hover:text-gray-100">Sign Up</a>
+            <a th:if="${!isSignIn}" th:href="@{/sign_in}" class="pr-4 font-medium text-gray-500 hover:text-gray-100">Sign In</a>
+            <form th:if="${isSignIn}" th:action="@{/sign_out}" name="signOutForm" method="post" style="display: inline-block;">
+                <a href="javascript:signOutForm.submit()" class="pr-4 font-medium text-gray-500 hover:text-gray-100">Sign Out</a>
+                <a th:href="@{/project/list}" class="font-medium text-gray-500 hover:text-gray-100" th:classappend="${myProject} ? pr-1 : pr-4">My Project</a>
+                <div th:if="${myProject}" class="inline-block">
+                    <p class="inline-block text-gray-500">|</p>
+                    <a th:href="@{'/task/list?projectId=' + ${myProject.id}}" th:text="${myProject.name}" class="pl-1 pr-4 font-medium text-gray-500 hover:text-gray-100"></a>
+                </div>
+            </form>
+        </div>
+    </nav>
+</div>

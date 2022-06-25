@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind/output.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/task-modal.js"></script>
+</head>
+<body class="bg-gray-900">
+    <div class="relative bg-gray-900 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-gray-900 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
+                <!-- start components/header.htmlのフラグメント -->
+                <div th:replace="components/header::header()"></div>
+                <!-- /end  -->
+                <main class="mx-auto max-w-7xl px-4 sm:px-6 g:px-8">
+                    <!-- new task -->
+                    <a class="my-2 mr-2 float-right items-center justify-center px-4 py-2 border border-transparent text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800"
+                       onclick="taskCreateModalOpen()">
+                        New Task
+                    </a>
+
+                    <!-- search -->
+                    <form method="get" th:action="@{/task/list}" th:object="${taskForm}" class="w-full my-4 flex">
+                        <input type="hidden" name="projectId" th:value="${myProject.id}">
+                        <div class="w-3/6 pl-2 flex-initial">
+                            <label th:for="taskName" class="block text-white">Task</label>
+                            <input type="text" th:field="*{taskName}" placeholder=""
+                                   class="rounded w-full leading-tight py-2 px-3 text-gray-900 focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="w-1/6 pl-5 flex-initial">
+                            <label th:for="userId" class="block text-white">User</label>
+                            <select id="userId" name="userId" th:value="*{userId}" class="block w-full leading-tight rounded-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option></option>
+                                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}" th:selected="${user.id == taskForm.userId}"></option>
+                            </select>
+                        </div>
+                        <div class="w-1/6 pl-5 flex-initial">
+                            <label th:for="statusId" class="block text-white">Status</label>
+                            <select id="statusId" name="statusId" th:value="*{statusId}" class="block w-full leading-tight rounded-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option></option>
+                                <option th:each="status : ${statusList}" th:value="${status.id}" th:text="${status.name}" th:selected="${status.id == taskForm.statusId}"></option>
+                            </select>
+                        </div>
+                        <div class="w-1/6 mt-6 pl-5 pr-2 flex-initial">
+                            <button type="submit" class="group relative justify-center py-2 px-4 float-right border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- list -->
+                    <div class="text-white sm:text-center lg:text-left">
+                        <table class="w-full">
+                            <thead>
+                            <tr class="border border-gray-600">
+                                <th class="w-1/2 py-4 pl-5">TASK</th>
+                                <th class="w-1/4">STATUS</th>
+                                <th class="w-1/4">USER</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-gray-800">
+                            <tr class="border border-gray-600 hover:bg-gray-700 cursor-pointer" th:each="task : ${tasks}">
+                                <td class="py-5 pl-5"><a th:href="@{'/task/view?projectId=' + ${myProject.id} + '&taskId=' + ${task.taskId}}" th:text="${task.taskName}" class="block"></a></td>
+                                <td><a th:href="@{'/task/view?projectId=' + ${myProject.id} + '&taskId=' + ${task.taskId}}" th:text="${task.statusName}" class="block"></a></td>
+                                <td><a th:href="@{'/task/view?projectId=' + ${myProject.id} + '&taskId=' + ${task.taskId}}" th:text="${task.userName}" class="block"></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <div th:replace="components/task_create_modal::taskCreateModal()"></div>
+</body>
+</html>
